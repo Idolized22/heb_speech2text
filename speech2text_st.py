@@ -155,7 +155,7 @@ def main():
         
         apply_speech2text = st.button('לבצע המרה אודיו לטקסט')
         if True:#with col2:
-            wav_audio_data = audiorecorder(start_prompt="", stop_prompt="", pause_prompt="") # st_audiorec() 
+            wav_audio_data = audiorecorder(start_prompt="START", stop_prompt="STOP", pause_prompt="") # st_audiorec() 
             if wav_audio_data:
                 saved_audio_file_name = 'recorded_audio_seg.wav'
                 save_audio(wav_audio_data, saved_audio_file_name)

@@ -153,8 +153,7 @@ def main():
         audio_transcription_model = Speech2Text_LLM(api_key=cfg['api_key'])
         col2, col1 = st.columns(2)
         
-        
-        apply_speech2text = False
+        apply_speech2text = st.button('לבצע המרה אודיו לטקסט')
         if True:#with col2:
             wav_audio_data = st_audiorec() #audiorecorder(start_prompt="", stop_prompt="", pause_prompt="")
             if wav_audio_data:
@@ -163,7 +162,7 @@ def main():
                 # wav_audio_data.export(saved_audio_file_name, format='wav')
                 # saved_file = save_audio(wav_audio_data)
                 # col1.audio(saved_audio_file_name, format="audio/wav")
-                apply_speech2text = col1.button('לבצע המרה אודיו לטקסט')
+                
         
         transcription_area = st.empty()
         if wav_audio_data or apply_speech2text:

@@ -2,8 +2,9 @@ import streamlit as st
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
-from audiorecorder import audiorecorder
+# from audiorecorder import audiorecorder
 # from st_audiorec import st_audiorec
+from audio_recorder_streamlit import audio_recorder
 import yaml
 
 class Speech2Text_LLM:
@@ -153,18 +154,18 @@ def main():
         audio_transcription_model = Speech2Text_LLM(api_key=cfg['api_key'])
         col2, col1 = st.columns(2)
         
-        apply_speech2text = st.button('לבצע המרה אודיו לטקסט')
-        if True:#with col2:
-            wav_audio_data = audiorecorder(start_prompt="START", stop_prompt="STOP", pause_prompt="") # st_audiorec() 
+        transcription_area = st.empty()
+        apply_speech2text = False
+        with col2:
+            wav_audio_data = audio_recorder(text="",pause_threshold= 3.5, recording_color="#e8b62c",neutral_color="#6aa36f",)#st_audiorec()#audiorecorder(start_prompt="", stop_prompt="", pause_prompt="")
             if wav_audio_data:
                 saved_audio_file_name = 'recorded_audio_seg.wav'
                 save_audio(wav_audio_data, saved_audio_file_name)
                 # wav_audio_data.export(saved_audio_file_name, format='wav')
                 # saved_file = save_audio(wav_audio_data)
-                # col1.audio(saved_audio_file_name, format="audio/wav")
-                
+                col1.audio(saved_audio_file_name, format="audio/wav")
+                apply_speech2text = col1.button('לבצע המרה אודיו לטקסט')
         
-        transcription_area = st.empty()
         if wav_audio_data or apply_speech2text:
             with st.spinner('ממיר אודיו לטקסט'):
                 # Transcribe audio

@@ -2,7 +2,8 @@ import streamlit as st
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
-from audiorecorder import audiorecorder
+# from audiorecorder import audiorecorder
+from st_audiorec import st_audiorec
 import yaml
 
 class Speech2Text_LLM:
@@ -155,10 +156,11 @@ def main():
         transcription_area = st.empty()
         apply_speech2text = False
         with col2:
-            wav_audio_data = audiorecorder(start_prompt="", stop_prompt="", pause_prompt="")
+            wav_audio_data = wav_audio_data = st_audiorec()#audiorecorder(start_prompt="", stop_prompt="", pause_prompt="")
             if wav_audio_data:
                 saved_audio_file_name = 'recorded_audio_seg.wav'
-                wav_audio_data.export(saved_audio_file_name, format='wav')
+                save_audio(wav_audio_data, saved_audio_file_name)
+                # wav_audio_data.export(saved_audio_file_name, format='wav')
                 # saved_file = save_audio(wav_audio_data)
                 col1.audio(saved_audio_file_name, format="audio/wav")
                 apply_speech2text = col1.button('לבצע המרה אודיו לטקסט')
